@@ -1,0 +1,29 @@
+name: Docker
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to registry
+        run: echo $GHCR_TOKEN | docker login ghcr.io -u $GHCR_USERNAME --password-stdin
+        env:
+          GHCR_USERNAME: ${{secrets.GHCR_USERNAME}}
+          GHCR_TOKEN: ${{secrets.GHCR_TOKEN}}
+
+      - name: Build
+        run: docker build -t ghcr.io/waltertamboer/docker-dns --file src/Dockerfile .
+
+      - name: Publish
+        run: docker push ghcr.io/waltertamboer/docker-dns

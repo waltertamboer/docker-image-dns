@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+killall dnsmasq
+
+for i in 1 2 3; do
+  sleep 1
+
+  /usr/sbin/dnsmasq "$@"
+
+  if [ $? = 0 ]; then
+    break
+  fi
+done
+
