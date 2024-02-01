@@ -28,3 +28,4 @@ docker run -d --name docker-dns \
 
 This Docker image is heavily based on https://github.com/jderusse/docker-dns-gen
 Since that repository is no longer maintained, I created this repository.
+
